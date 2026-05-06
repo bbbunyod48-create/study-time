@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a1a">
+    <title>NeuroFlow - Aqlli O'quv Yordamchisi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar glass">
+        <div class="logo">
+            <span class="logo-icon">🧠</span>
+            <span class="logo-text">NeuroFlow</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-tab="timer">⏱ Taymer</button>
+            <button class="tab-btn" data-tab="notes">📝 Bloknot</button>
+            <button class="tab-btn" data-tab="stats">📈 Statistika</button>
+            <button class="tab-btn" data-tab="settings">⚙️ Sozlama</button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-content active">
+            <div class="welcome glass">
+                <h1>Xush kelibsiz! 👋</h1>
+                <p id="motivationText">Bugun ajoyib kun bo'lishi mumkin!</p>
+                <div class="streak-counter">
+                    <span class="streak-icon">🔥</span>
+                    <span class="streak-text">Streak: <span id="streakCount">0</span> kun</span>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card glass">
+                    <h2>🎯 Bugungi Optimal Vaqtlar</h2>
+                    <div id="optimalTimes" class="optimal-times">
+                        <p class="empty-state">Avval sozlamalardan uyqu vaqtingizni kiriting</p>
+                    </div>
+                </div>
+
+                <div class="card glass">
+                    <h2>⚡ Energiya Darajasi</h2>
+                    <div class="energy-meter">
+                        <div class="energy-bar">
+                            <div id="energyFill" class="energy-fill"></div>
+                        </div>
+                        <p id="energyText" class="energy-text">Sozlamalarni kiriting</p>
+                    </div>
+                    <div id="recommendation" class="recommendation"></div>
+                </div>
+            </div>
+
+            <div class="card glass">
+                <h2>📅 Bugungi Statistika</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayHours">0</div>
+                        <div class="stat-label">Soat o'qildi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayPomodoros">0</div>
+                        <div class="stat-label">Pomodoro</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayTasks">0</div>
+                        <div class="stat-label">Vazifa bajarildi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="focusScore">0%</div>
+                        <div class="stat-label">Focus Score</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMER TAB -->
+        <section id="timer" class="tab-content">
+            <div class="timer-container glass">
+                <h2>🍅 Pomodoro Taymer</h2>
+                <div class="timer-mode">
+                    <button class="mode-btn active" data-mode="work" data-time="25">Ish (25 min)</button>
+                    <button class="mode-btn" data-mode="short" data-time="5">Qisqa dam (5 min)</button>
+                    <button class="mode-btn" data-mode="long" data-time="15">Uzoq dam (15 min)</button>
+                </div>
+
+                <div class="timer-display">
+                    <svg class="timer-svg" viewBox="0 0 200 200">
+                        <circle class="timer-bg-circle" cx="100" cy="100" r="90" />
+                        <circle class="timer-progress" id="timerProgress" cx="100" cy="100" r="90" />
+                    </svg>
+                    <div class="timer-text">
+                        <div id="timerDisplay">25:00</div>
+                        <div id="timerLabel">Ishlash vaqti</div>
+                    </div>
+                </div>
+
+                <div class="timer-controls">
+                    <button id="startBtn" class="btn btn-primary">▶ Boshlash</button>
+                    <button id="pauseBtn" class="btn btn-secondary" disabled>⏸ Pauza</button>
+                    <button id="resetBtn" class="btn btn-secondary">🔄 Reset</button>
+                </div>
+
+                <div class="current-task">
+                    <input type="text" id="currentTask" placeholder="Hozir nimani o'rganyapsiz?" class="task-input">
+                </div>
+
+                <div class="pomodoro-counter">
+                    <span>Bugungi sessiyalar: </span>
+                    <span id="sessionCount" class="session-badge">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOTES TAB -->
+        <section id="notes" class="tab-content">
+            <div class="card glass">
+                <h2>📝 Aqlli Bloknot (Eisenhower Matrix)</h2>
+                <div class="add-task">
+                    <input type="text" id="taskInput" placeholder="Yangi vazifa qo'shing..." class="task-input">
+                    <select id="taskPriority" class="select-input">
+                        <option value="critical">🔴 Kritik (Muhim + Shoshilinch)</option>
+                        <option value="important">🟡 Muhim (Rejalashtirilgan)</option>
+                        <option value="urgent">🟠 Shoshilinch (Delegatsiya)</option>
+                        <option value="bonus">🔵 Bonus (Ixtiyoriy)</option>
+                    </select>
+                    <button id="addTaskBtn" class="btn btn-primary">+ Qo'shish</button>
+                </div>
+            </div>
+
+            <div class="matrix-grid">
+                <div class="matrix-quadrant glass critical">
+                    <h3>🔴 Kritik (Hoziroq qiling)</h3>
+                    <ul id="criticalTasks" class="task-list"></ul>
+                </div>
+                <div class="matrix-quadrant glass important">
+                    <h3>🟡 Muhim (Rejalashtiring)</h3>
+                    <ul id="importantTasks" class="task-list"></ul>
+                </div>
+                <div class="matrix-quadrant glass urgent">
+                    <h3>🟠 Shoshilinch (Delegatsiya)</h3>
+                    <ul id="urgentTasks" class="task-list"></ul>
+                </div>
+                <div class="matrix-quadrant glass bonus">
+                    <h3>🔵 Bonus (Energiya bo'lsa)</h3>
+                    <ul id="bonusTasks" class="task-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS TAB -->
+        <section id="stats" class="tab-content">
+            <div class="card glass">
+                <h2>📈 Haftalik Statistika</h2>
+                <div class="weekly-chart">
+                    <div id="weeklyBars" class="bars-container"></div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card glass">
+                    <h2>🔥 Issiqlik Xaritasi</h2>
+                    <p class="subtitle">Qachon eng samarali bo'lasiz?</p>
+                    <div id="heatmap" class="heatmap"></div>
+                </div>
+
+                <div class="card glass">
+                    <h2>🏆 Yutuqlar</h2>
+                    <div id="achievements" class="achievements">
+                        <div class="achievement locked">
+                            <span class="achievement-icon">🎯</span>
+                            <div class="achievement-info">
+                                <div class="achievement-title">Birinchi Qadam</div>
+                                <div class="achievement-desc">1 ta Pomodoro tugating</div>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <span class="achievement-icon">🔥</span>
+                            <div class="achievement-info">
+                                <div class="achievement-title">Olov</div>
+                                <div class="achievement-desc">7 kun ketma-ket</div>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <span class="achievement-icon">💎</span>
+                            <div class="achievement-info">
+                                <div class="achievement-title">Olmos</div>
+                                <div class="achievement-desc">100 ta Pomodoro</div>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <span class="achievement-icon">🧠</span>
+                            <div class="achievement-info">
+                                <div class="achievement-title">Mutafakkir</div>
+                                <div class="achievement-desc">50 soat o'qish</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS TAB -->
+        <section id="settings" class="tab-content">
+            <div class="card glass">
+                <h2>⚙️ Shaxsiy Sozlamalar</h2>
+
+                <div class="form-group">
+                    <label>🌅 Odatda nechchida uyg'onasiz?</label>
+                    <input type="time" id="wakeTime" class="input" value="07:00">
+                </div>
+
+                <div class="form-group">
+                    <label>🌙 Odatda nechchida uxlaysiz?</label>
+                    <input type="time" id="sleepTime" class="input" value="23:00">
+                </div>
+
+                <div class="form-group">
+                    <label>😴 Kecha necha soat uxladingiz?</label>
+                    <input type="number" id="lastSleep" class="input" min="0" max="12" step="0.5" value="8">
+                </div>
+
+                <div class="form-group">
+                    <label>🦉 Sizning xronotipingiz qanday?</label>
+                    <select id="chronotype" class="input">
+                        <option value="lark">🐦 To'rg'ay (Erta turaman)</option>
+                        <option value="balanced">⚖️ Muvozanatli</option>
+                        <option value="owl">🦉 Boyo'g'li (Kech yotaman)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🎯 Kunlik maqsadingiz (soat)</label>
+                    <input type="number" id="dailyGoal" class="input" min="1" max="12" value="4">
+                </div>
+
+                <button id="saveSettings" class="btn btn-primary btn-large">💾 Saqlash</button>
+
+                <div class="danger-zone">
+                    <button id="resetData" class="btn btn-danger">🗑 Barcha ma'lumotlarni tozalash</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
